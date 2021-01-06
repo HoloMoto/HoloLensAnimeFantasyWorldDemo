@@ -20,6 +20,7 @@ public class HatenaBlock : MonoBehaviour
     UnityEvent EndBlockEvents;
     [SerializeField,Tooltip("")]
     UnityEvent DeactiveBlockEvents;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,18 +35,20 @@ public class HatenaBlock : MonoBehaviour
 
     public void OnActiveHatenaBlockEvent()
     {
-        if (BlockLife>0)
+        if (BlockLife>1)
         {
+            Debug.Log("bia");
             BlockActiveEvents.Invoke();
 
             BlockLife -= 1;
-            if (BlockLife == 0)
-            {
-                EndBlockLifeEvent();
-            }
+        }
+        else if(BlockLife==1 )
+        { 
+            EndBlockLifeEvent();
         }
         else
         {
+            Debug.Log("End");
             DeactiveBlockEvents.Invoke();
         }
     }
@@ -54,4 +57,6 @@ public class HatenaBlock : MonoBehaviour
     {
         EndBlockEvents.Invoke();    
     }
+    
+    
 }
