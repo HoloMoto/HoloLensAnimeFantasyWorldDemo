@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class MarioPlayerSettings : MonoBehaviour
 {
+    public float Score;
     private SphereCollider col;
     // Start is called before the first frame update
     void Start()
     {
+        Score = 0;
         col = this.gameObject.AddComponent<SphereCollider>();
         col.center = new Vector3(0, 0, 0);
         col.radius = 0.2f;
