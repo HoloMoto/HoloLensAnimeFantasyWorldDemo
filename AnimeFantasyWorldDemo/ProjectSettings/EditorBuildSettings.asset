@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/SuperMarioBos_/Stage(Scene)/Stage1-1.unity
+    guid: 70a815cb73abcaa4380572fd28641fe3
   m_configObjects: {}
