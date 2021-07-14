@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+using Microsoft.MixedReality.Toolkit;
 using UnityEngine;
-using Microsoft.MixedReality.Toolkit.Utilities;
+using Microsoft.MixedReality.Toolkit.SpatialAwareness;
+using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 using TMPro;
 
 public class StageSettings : MonoBehaviour
@@ -10,33 +10,50 @@ public class StageSettings : MonoBehaviour
     [SerializeField] 
      float Floor ;
 
+
+     
      [SerializeField] 
      GameObject floorGeter;
 
+     [SerializeField, Tooltip("After measuring the floor, we will still use SpatialMesh.")] 
+     bool usePersistentSpatialMesh = false;     
      [SerializeField] 
      GameObject stagetextRoot;
      [SerializeField] 
      TextMeshPro Stagetext;
      [SerializeField] 
      GameObject FloorAnchor;
-    // Start is called before the first frame update
+
+     [SerializeField]
+     GameObject StageObject;
+
+     [SerializeField] 
+     MarioPlayerSettings marioSettings;
+
+     [SerializeField, Tooltip("Status Check Text(Debug)")]
+     TextMeshPro DebugText;
+     // Start is called before the first frame update
     void Start()
     {
-        InitializeFloorSetting();
-       
+        
+        InitializeFloorSetting(7);
     }
 
-
-    void InitializeFloorSetting()
+    
+    public void InitializeFloorSetting(float sec)
     {
         floorGeter.SetActive(false);
-        StartCoroutine("FloorSetting");
+        StageObject.SetActive(false);
+        StartCoroutine("FloorSetting",sec);
     }
 
-    IEnumerator FloorSetting()
+    IEnumerator FloorSetting(float sec)
     {
-        yield return new WaitForSeconds(7);
+        TapToPlace ttp = floorGeter.transform.Find("Cube").gameObject.GetComponent<TapToPlace>();
+       yield return new WaitForSeconds(sec);
         floorGeter.SetActive(true);
+        yield return new WaitForSeconds(2);
+        ttp.enabled = false;
     }
     public void setFloor()
     {
@@ -44,11 +61,31 @@ public class StageSettings : MonoBehaviour
         Floor = FloorAnchor.transform.position.y;
         floorGeter.SetActive(false);
         
-#if UNITY_EDITOR
         GameObject plane  = GameObject.CreatePrimitive(PrimitiveType.Plane);
         plane.transform.position = new Vector3(0,Floor,0);
-#endif
-
+        plane.transform.localScale = new Vector3(10f,1f,100f);
+        plane.GetComponent<Renderer>().enabled = false;
     }
+
+    public void stageSet()
+    {
+        StageObject.transform.position = new Vector3(0, Floor, 0);
+        StageObject.SetActive(true);
+        marioSettings.PlayerGameSettings(Floor);
+        if (!usePersistentSpatialMesh)
+        {
+            var access = CoreServices.SpatialAwarenessSystem as IMixedRealityDataProviderAccess;
+            var observer = access.GetDataProvider<IMixedRealitySpatialAwarenessMeshObserver>(); 
+            // Change the VisivleMaterial to new material.
+            observer.DisplayOption = SpatialAwarenessMeshDisplayOptions.None;
+           
+           
+            //dalete SpatialMeshCollider
+            //GameObject.Find("SpatialAwareness").SetActive(false);
+            Destroy(GameObject.Find("Spatial Awareness System"));
+            observer.Suspend();
+        }
+        
+    }  
     
 }
