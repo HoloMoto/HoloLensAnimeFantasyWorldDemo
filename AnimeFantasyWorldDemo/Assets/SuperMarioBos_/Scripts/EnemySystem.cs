@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 public class EnemySystem : MonoBehaviour
@@ -57,7 +59,9 @@ public class EnemySystem : MonoBehaviour
     }
 
 
-
+   /// <summary>
+   /// If use's Atack Enemy
+   /// </summary>
     public void DamegeEvent()
     {
         Life--;
@@ -96,6 +100,14 @@ public class EnemySystem : MonoBehaviour
     private void KuriboDead()
     {
         Debug.Log("クリボーが死んだ！");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name=="Maincamera")
+        {
+            platerSyesem.Damage();
+        }
     }
 }
 

@@ -25,7 +25,7 @@ public class ItemSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       player = GameObject.Find("Main Camera").GetComponent<MarioPlayerSettings>();
+       player = Camera.main.gameObject.GetComponent<MarioPlayerSettings>();
     }
 
     // Update is called once per frame

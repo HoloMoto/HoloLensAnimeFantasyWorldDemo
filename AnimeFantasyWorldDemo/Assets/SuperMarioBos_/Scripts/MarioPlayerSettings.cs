@@ -93,21 +93,14 @@ public class MarioPlayerSettings : MonoBehaviour
         if (Fire&& FireSystem !=null)
         {
             FireSystem.SetActive(true);
+            scoreSystem(200);
+            StartCoroutine(StatusEnd(-1));
         }
-
         if (Star)
         {
-            
+            StartCoroutine(StatusEnd(20));
         }
-        else
-        {
-            if (FireSystem != null)
-            {
-                FireSystem.SetActive(false);
-            }
-            Fire = false;
-            Star = false;
-        }
+      
     }
 
     public void Damage()
@@ -136,5 +129,16 @@ public class MarioPlayerSettings : MonoBehaviour
     {
        Score += i;
        ScoreText.text = Score.ToString();
+    }
+    //SetAndChangeCharactorStatus.
+
+    IEnumerator  StatusEnd(float t)
+    {
+        if (t > 0)
+        {
+            yield return new WaitForSeconds(t);
+            Star = false;
+        }
+        
     }
 }
