@@ -5,7 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/SuperMarioBos_/Stage(Scene)/Stage1-1.unity
     guid: 70a815cb73abcaa4380572fd28641fe3
+  - enabled: 0
+    path: Assets/SuperMarioBos_/Stage(Scene)/StatusTest.unity
+    guid: bddee6c9fc208ae41a2a7f25413519ca
+  - enabled: 0
+    path: Assets/SuperMarioBos_/Stage(Scene)/HoleTest.unity
+    guid: 2f535da8d35de6c4ba42a7e283d22458
+  - enabled: 1
+    path: Assets/OriginalUI/TestScene.unity
+    guid: 8262f5b3e3aaaf8468f5e9c31c721454
   m_configObjects: {}
